@@ -12,6 +12,9 @@ const path = require('path');
 app.use(express.urlencoded({extended:true}))
 app.use(express.json())
 
+//mongo db connection
+require('./configuration/configdb')
+
 //Handlebars
 
 app.set('views', path.join(__dirname, 'views'))
