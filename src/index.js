@@ -4,15 +4,35 @@ require('dotenv').config();
 //express
 const express = require('express');
 const app = express();
+const hbs = require('express-handlebars');
+const path = require('path');
 
 
 //express setting
 app.use(express.urlencoded({extended:true}))
 app.use(express.json())
 
+//Handlebars
+
+app.set('views', path.join(__dirname, 'views'))
+
+app.engine('.hbs', hbs({ 
+   runtimeOptions: {
+      allowProtoPropertiesByDefault: true,
+      allowProtoMethodsByDefault: true,
+   },   
+   layoutsDir:path.join(app.get('views'),'layouts'),
+   partialsDir:path.join(app.get('views'),'partials'),
+   extname:'.hbs',
+   defaultLayout:'main'
+}))
+ 
+app.set('view engine', 'hbs')
+
+
 
 app.get('/', (req, res)=>{
-  res.send('<h1>Hola Mundo </h1>');
+  res.render('index');
 });
 
 
