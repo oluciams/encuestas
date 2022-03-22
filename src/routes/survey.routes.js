@@ -1,11 +1,20 @@
 const router = require('express').Router()
 
-const {getHome} = require('../controllers/survey.controller')
+const {getHome, createSurvey, showSurveys, deleteSurvey } = require('../controllers/survey.controller')
 //const {requireUser} = require ('../middlewares/auth.middleware')
 const app = require('../index')
 
 
 router.get('/', getHome)
+
+router.post('/', createSurvey)
+
+router.get('/surveys', showSurveys)
+
+router.delete('/tasks/delete/:id', deleteSurvey)
+
+
+
 // router.get('/', requireUser, getHome)
 
 // router.post('/', requireUser, createTask)
