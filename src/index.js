@@ -1,3 +1,5 @@
+'use strict'
+
 //environet variables
 require('dotenv').config();
 
@@ -6,6 +8,9 @@ const express = require('express');
 const app = express();
 const hbs = require('express-handlebars');
 const path = require('path');
+const cookieSession = require('cookie-session')
+const methodOverride = require('method-override');
+const flash = require('connect-flash');
 const surveyRoutes = require('./routes/survey.routes');
 const userRoutes = require('./routes/user.routes')
 
@@ -14,11 +19,45 @@ const userRoutes = require('./routes/user.routes')
 app.use(express.urlencoded({extended:true}))
 app.use(express.json())
 
+//configuracion sesion
+app.use(cookieSession({
+   name: 'session',
+   keys: ['survey_session'],  
+   maxAge: 24 * 60 * 60 * 1000 // 24 hours
+
+}))
+
 //mongo db connection
 require('./configuration/configdb')
 
-//Handlebars
+app.use(flash())
 
+//variables globales
+app.use((req, res, next) =>{
+   res.locals.success_msg = req.flash('success_msg')
+   res.locals.danger_msg = req.flash('danger_msg')
+   next()
+})
+
+//para peticiones delete y put
+app.use(methodOverride('_method', {methods: ['POST', 'GET']}))
+
+// const User = require('../src/models/modelUser')
+
+// app.use(async (req, res, next) => {
+//    const userId = req.session.userId
+//    if(userId){
+//        const user = await User.findById(userId)
+//        if(user){
+//            res.locals.user = user            
+//        }else{
+//            delete req.session.userId
+//        }
+//    }
+//    next()    
+// })
+
+//Handlebars
 app.set('views', path.join(__dirname, 'views'))
 
 app.engine('.hbs', hbs({ 
@@ -37,6 +76,8 @@ app.set('view engine', 'hbs')
 app.use(userRoutes)
 app.use(surveyRoutes)
 
+//archivos estaticos imagenes, estilos
+app.use(express.static(path.join(__dirname, "public")))
 
 
 module.exports = app
