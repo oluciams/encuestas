@@ -17,7 +17,7 @@ const SurveySchema = new Schema ({
   },
   votes: Number,
   date: {
-    tipe: Date, 
+    type: Date, 
     default: Date.now()
   },
   answers: [

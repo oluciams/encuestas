@@ -6,6 +6,8 @@ const express = require('express');
 const app = express();
 const hbs = require('express-handlebars');
 const path = require('path');
+const surveyRoutes = require('./routes/survey.routes');
+const userRoutes = require('./routes/user.routes')
 
 
 //express setting
@@ -32,12 +34,11 @@ app.engine('.hbs', hbs({
  
 app.set('view engine', 'hbs')
 
+app.use(userRoutes)
+app.use(surveyRoutes)
 
 
-app.get('/', (req, res)=>{
-  res.render('index');
-});
 
-
+module.exports = app
 
 app.listen(process.env.PORT || 3000, ()=>console.log(`Listening on port ${process.env.PORT || 3000}`));
