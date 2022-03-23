@@ -27,7 +27,7 @@ const createSurvey = async (req,res)=>{
             const survey = new Survey({title, description, user: res.locals.user});
             await survey.save();        
             req.flash('success_msg', 'Survey added successfully')
-            res.redirect('/survey')
+            res.redirect('/surveys')
         }catch (error) {
             throw new Error(error)
         }
@@ -36,7 +36,7 @@ const createSurvey = async (req,res)=>{
 
 const showSurveys = async (req, res) => {
     try {
-        const surveys = await survey.find({user: res.locals.user});
+        const surveys = await Survey.find({user: res.locals.user});
         res.render('surveys', { surveys })
     }catch (error) {
         throw new Error(error)
