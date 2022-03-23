@@ -14,21 +14,18 @@ const flash = require('connect-flash');
 const surveyRoutes = require('./routes/survey.routes');
 const userRoutes = require('./routes/user.routes')
 
+//mongo db connection
+require('./configuration/configdb')
 
 //express setting
 app.use(express.urlencoded({extended:true}))
 app.use(express.json())
-
 //configuracion sesion
 app.use(cookieSession({
    name: 'session',
    keys: ['survey_session'],  
    maxAge: 24 * 60 * 60 * 1000 // 24 hours
-
 }))
-
-//mongo db connection
-require('./configuration/configdb')
 
 app.use(flash())
 
@@ -42,20 +39,20 @@ app.use((req, res, next) =>{
 //para peticiones delete y put
 app.use(methodOverride('_method', {methods: ['POST', 'GET']}))
 
-// const User = require('../src/models/modelUser')
+const User = require('../src/models/modelUser')
 
-// app.use(async (req, res, next) => {
-//    const userId = req.session.userId
-//    if(userId){
-//        const user = await User.findById(userId)
-//        if(user){
-//            res.locals.user = user            
-//        }else{
-//            delete req.session.userId
-//        }
-//    }
-//    next()    
-// })
+app.use(async (req, res, next) => {
+   const userId = req.session.userId
+   if(userId){
+       const user = await User.findById(userId)
+       if(user){
+           res.locals.user = user            
+       }else{
+           delete req.session.userId
+       }
+   }
+   next()    
+})
 
 //Handlebars
 app.set('views', path.join(__dirname, 'views'))
@@ -78,6 +75,25 @@ app.use(surveyRoutes)
 
 //archivos estaticos imagenes, estilos
 app.use(express.static(path.join(__dirname, "public")))
+
+//para ruta no definida
+app.get('*', function(req, res, next ){
+   res.status(404).render('notFound')
+})
+
+//
+app.use((err, req, res, next) => {
+
+   if (err.statusCode === 400) {       
+       const errors = [];
+       errors.push({ text: err.message })
+       res.status(err.statusCode).render("register", {
+           errors,
+       });
+   } else {
+       res.status(500).render('errors/serverError')
+   }   
+});
 
 
 module.exports = app

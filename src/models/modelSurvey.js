@@ -20,16 +20,15 @@ const SurveySchema = new Schema ({
     type: Date, 
     default: Date.now()
   },
-  answers: [
-    {
-      answer1: String,
-      vote: { type: Number, default:0}
-    },
-    {
-      answer2: String,
-      vote: { type: Number, default:0}
-    }
-  ]
+  option1: {
+    type: String,
+    vote: { type: Number, default:0}
+  },
+  option2: {
+    type: String,
+    vote: { type: Number, default:0}
+  }
+  
 })
 
 module.exports = mongoose.model('survey', SurveySchema)
