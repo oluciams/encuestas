@@ -14,21 +14,8 @@ const SurveySchema = new Schema ({
   description: {
     type: String,
     required: true
-  },
-  votes: Number,
-  date: {
-    type: Date, 
-    default: Date.now()
-  },
-  option1: {
-    type: String,
-    vote: { type: Number, default:0}
-  },
-  option2: {
-    type: String,
-    vote: { type: Number, default:0}
   }
   
 })
 
-module.exports = mongoose.model('survey', SurveySchema)
+module.exports = mongoose.model('surveys', SurveySchema)
