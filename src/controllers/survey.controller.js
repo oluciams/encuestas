@@ -7,7 +7,7 @@ const getHome = (req, res)=>{
 }
 
 const createSurvey = async (req,res)=>{
-    const { title, description } = req.body;
+    const { title, description, option1, option2 } = req.body;
     const errors = []
 
     if (!title) {
@@ -24,7 +24,7 @@ const createSurvey = async (req,res)=>{
         })
     } else {
         try{
-            const survey = new Survey({title, description, user: res.locals.user});
+            const survey = new Survey({title, description, option1, option2, user: res.locals.user});
             await survey.save();        
             req.flash('success_msg', 'Survey added successfully')
             res.redirect('/surveys')

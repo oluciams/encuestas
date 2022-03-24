@@ -14,6 +14,12 @@ const SurveySchema = new Schema ({
   description: {
     type: String,
     required: true
+  },
+  option1: {
+    type: String
+  },
+  option2: {
+    type: String
   }
   
 })

@@ -13,7 +13,7 @@ const methodOverride = require('method-override');
 const flash = require('connect-flash');
 const surveyRoutes = require('./routes/survey.routes');
 const userRoutes = require('./routes/user.routes');
-const surveyApiRoutes = require('./routes/api.survey.routes')
+
 
 //mongo db connection
 require('./configuration/configdb')
@@ -73,7 +73,6 @@ app.set('view engine', 'hbs')
 
 app.use(userRoutes)
 app.use(surveyRoutes)
-app.use(surveyApiRoutes)
 
 //archivos estaticos imagenes, estilos
 app.use(express.static(path.join(__dirname, "public")))
