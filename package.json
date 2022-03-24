@@ -19,7 +19,8 @@
     "express": "^4.17.3",
     "express-handlebars": "^5.3.2",
     "method-override": "^3.0.0",
-    "mongoose": "^6.2.7"
+    "mongoose": "^6.2.7",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "nodemon": "^2.0.15"

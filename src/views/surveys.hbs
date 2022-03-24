@@ -1,19 +1,30 @@
-<a href="/" class="btn btn-success mt-3 col-md-2" role="button">Create Survey</a>
+<div class="container">
 
-<div class="mt-4">
-  <div class="card" style="width: 18rem;">
-    <div class="card-body">
-      <h5 class="card-title">Card title</h5>
-      <p class="card-text"><small class="text-muted">usuario</small></p>   
-      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-      </div>
-    <div class="card-footer bg-transparent border-dark">
-      Cantidad votos    
-      <a href="#" class="btn btn-primary">Votar</a>      
-    </div>
-  </div>
+  <a href="/" class="btn btn-success mt-3 col-md-2" role="button">Create Survey</a>
+
+  <h4 class="text-center my-4">No hay encuestas</h4>
+   
+    {{#each surveys}}
+      <div class="row">
+        <div class="col-3 mt-3">                     
+          <div class="card" style="width: 18rem;">
+            <a href="/tasks/delete/{{_id}}?_method=DELETE" class="text-dark text-end mt-1 mx-2"><i class="fas fa-trash-alt"></i> </a></td>
+            <div class="card-body">
+              <h5 class="card-title">{{title}}</h5>
+              <p class="card-text"><small class="text-muted">creado por </small></p>   
+              <p class="card-text">{{description}}</p>
+            </div>
+            <div class="card footer">
+              <div class="d-grid gap-2 d-md-flex justify-content-between">           
+                <a href="#" class="btn text-muted">Cantidad votos</a>                   
+                <a href="#" class="btn btn-secondary">Votar</a>
+              </div>
+            </div>          
+          </div> 
+        </div>         
+      </div>    
+    {{/each}}
 </div>
-
 
 
 {{!-- <table class="table">
