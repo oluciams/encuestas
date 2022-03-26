@@ -3,7 +3,8 @@ const app = require('../index')
 
 
 const getHome = (req, res)=>{    
-    res.render('index' )       
+    res.render('index')  
+    // res.render('index' )       
 }
 
 const createSurvey = async (req,res)=>{
@@ -24,7 +25,11 @@ const createSurvey = async (req,res)=>{
         })
     } else {
         try{
-            const survey = new Survey({title, description, option1, option2, user: res.locals.user});
+            const options = []
+            options.push({option: option1})
+            options.push({option: option2})
+
+            const survey = new Survey({title, description, options, user: res.locals.user});
             await survey.save();        
             req.flash('success_msg', 'Survey added successfully')
             res.redirect('/surveys')
@@ -42,6 +47,7 @@ const showSurveys = async (req, res) => {
         throw new Error(error)
     }
 }
+
 
 const deleteSurvey = async (req, res) => {
     try {        

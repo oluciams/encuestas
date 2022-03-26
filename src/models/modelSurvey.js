@@ -1,4 +1,5 @@
-const mongoose = require ('mongoose')
+const mongoose = require ('mongoose');
+const { date } = require('yup');
 
 const Schema = mongoose.Schema;
 
@@ -15,13 +16,20 @@ const SurveySchema = new Schema ({
     type: String,
     required: true
   },
-  option1: {
-    type: String
+  date: {
+    type: Date,
+    default: Date.now()
   },
-  option2: {
-    type: String
-  }
-  
+  options: [{
+    option: {
+      type: String,
+      default: ""
+    },
+    vote: {
+      type: Number,
+      default: 0
+    }
+  }]  
 })
 
 module.exports = mongoose.model('surveys', SurveySchema)
