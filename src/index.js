@@ -47,13 +47,15 @@ app.use(async (req, res, next) => {
    if(userId){
        const user = await User.findById(userId)
        if(user){
-           res.locals.user = user            
+           res.locals.user = user  
+         //   console.log(res.locals.user)          
        }else{
            delete req.session.userId
        }
    }
    next()    
 })
+
 
 //Handlebars
 app.set('views', path.join(__dirname, 'views'))

@@ -11,6 +11,8 @@ router.post('/', createSurvey)
 
 router.get('/surveys', showSurveys)
 
+router.get
+
 router.delete('/survey/delete/:id', deleteSurvey)
 
 
