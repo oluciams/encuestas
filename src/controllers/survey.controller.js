@@ -48,6 +48,23 @@ const showSurveys = async (req, res) => {
     }
 }
 
+const voteSurvey = async (req, res) => {
+    try {
+        const surveys = await Survey.find({user: res.locals.user});
+        res.render('vote', {surveys})
+    }catch (error) {
+        throw new Error(error)
+    }
+}
+
+const showResults = async (req, res) => {
+    try {
+        const surveys = await Survey.find({user: res.locals.user});
+        res.render('results', {surveys})
+    }catch (error) {
+        throw new Error(error)
+    }
+}
 
 const deleteSurvey = async (req, res) => {
     try {        
@@ -85,6 +102,8 @@ module.exports = {
     getHome,
     createSurvey,
     showSurveys,
+    voteSurvey,
+    showResults,
     deleteSurvey 
     // updateStatus    
 }
