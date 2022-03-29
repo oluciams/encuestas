@@ -8,7 +8,8 @@ const express = require('express');
 const app = express();
 const hbs = require('express-handlebars');
 const path = require('path');
-const cookieSession = require('cookie-session')
+const cookieSession = require('cookie-session');
+const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
 const flash = require('connect-flash');
 const surveyRoutes = require('./routes/survey.routes');
@@ -38,7 +39,9 @@ app.use((req, res, next) =>{
 })
 
 //para peticiones delete y put
+//app.use(bodyParser.urlencoded({extended:false}))
 app.use(methodOverride('_method', {methods: ['POST', 'GET']}))
+
 
 const User = require('../src/models/modelUser')
 

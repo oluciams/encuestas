@@ -3,8 +3,7 @@ const app = require('../index')
 
 
 const getHome = (req, res)=>{    
-    res.render('index')  
-    // res.render('index' )       
+   res.render('index' )       
 }
 
 const createSurvey = async (req,res)=>{
@@ -33,15 +32,25 @@ const createSurvey = async (req,res)=>{
             await survey.save();        
             req.flash('success_msg', 'Survey added successfully')
             res.redirect('/surveys')
+            
         }catch (error) {
             throw new Error(error)
         }
     }    
 }
 
+// const showSurveys = async (req, res) => {
+//     try {
+//         const surveys = await Survey.find({user: res.locals.user});
+//         res.render('surveys', { surveys })
+//     }catch (error) {
+//         throw new Error(error)
+//     }
+// }
+
 const showSurveys = async (req, res) => {
     try {
-        const surveys = await Survey.find({user: res.locals.user});
+        const surveys = await Survey.find();
         res.render('surveys', { surveys })
     }catch (error) {
         throw new Error(error)
@@ -50,7 +59,7 @@ const showSurveys = async (req, res) => {
 
 const voteSurvey = async (req, res) => {
     try {
-        const surveys = await Survey.find({user: res.locals.user});
+        const surveys = await Survey.find();
         res.render('vote', {surveys})
     }catch (error) {
         throw new Error(error)
@@ -59,7 +68,7 @@ const voteSurvey = async (req, res) => {
 
 const showResults = async (req, res) => {
     try {
-        const surveys = await Survey.find({user: res.locals.user});
+        const surveys = await Survey.find();
         res.render('results', {surveys})
     }catch (error) {
         throw new Error(error)
@@ -69,7 +78,7 @@ const showResults = async (req, res) => {
 const deleteSurvey = async (req, res) => {
     try {        
         const { id } = req.params;
-        await survey.deleteOne({_id:id }) 
+        await Survey.deleteOne({_id:id }) 
         req.flash('success_msg', 'Survey deleted successfully')           
         res.redirect('/surveys')
     }catch (error) {

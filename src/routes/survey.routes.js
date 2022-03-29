@@ -15,7 +15,7 @@ router.get('/vote', voteSurvey)
 
 router.get('/results', showResults)
 
-router.delete('/survey/delete/:id', deleteSurvey)
+router.delete('/surveys/delete/:id', deleteSurvey)
 
 
 
@@ -31,6 +31,5 @@ router.delete('/survey/delete/:id', deleteSurvey)
 
 // router.post('/status/:id', requireUser, updateStatus)
 
-// router.delete('/tasks/delete/:id',requireUser, deleteTask)
 
 module.exports = router 
