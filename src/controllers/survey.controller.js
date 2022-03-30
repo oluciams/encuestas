@@ -78,7 +78,10 @@ const showResults = async (req, res) => {
 const deleteSurvey = async (req, res) => {
     try {        
         const { id } = req.params;
-        await Survey.deleteOne({_id:id }) 
+        await Survey.deleteOne({_id:id })
+        // const surveys = await Survey.find({user: res.locals.user}); 
+        // await Survey.deleteOne({_id:id}) 
+       
         req.flash('success_msg', 'Survey deleted successfully')           
         res.redirect('/surveys')
     }catch (error) {
