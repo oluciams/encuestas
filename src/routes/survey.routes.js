@@ -7,6 +7,8 @@ const app = require('../index')
 
 router.get('/', getHome)
 
+//router.post('/', requireUser, createSurvey)
+
 router.post('/', requireUser, createSurvey)
 
 router.get('/surveys', showSurveys)

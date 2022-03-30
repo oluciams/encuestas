@@ -1,9 +1,11 @@
 const Survey = require('../models/modelSurvey')
+const User = require('../models/modelUser')
 const app = require('../index')
 
 
-const getHome = (req, res)=>{    
-   res.render('index' )       
+const getHome = async (req, res)=>{ 
+    const surveys = await Survey.find();   
+   res.render('index', {surveys} )       
 }
 
 const createSurvey = async (req,res)=>{
@@ -31,7 +33,7 @@ const createSurvey = async (req,res)=>{
             const survey = new Survey({title, description, options, user: res.locals.user});
             await survey.save();        
             req.flash('success_msg', 'Survey added successfully')
-            res.redirect('/surveys')
+            res.redirect('/results')
             
         }catch (error) {
             throw new Error(error)
@@ -49,16 +51,17 @@ const createSurvey = async (req,res)=>{
 // }
 
 const showSurveys = async (req, res) => {
-    try {
+    try {       
         const surveys = await Survey.find();
-        res.render('surveys', { surveys })
+        res.render('surveys', { surveys })    
     }catch (error) {
         throw new Error(error)
     }
 }
 
 const voteSurvey = async (req, res) => {
-    try {
+
+    try {        
         const surveys = await Survey.find();
         res.render('vote', {surveys})
     }catch (error) {
@@ -113,7 +116,7 @@ const deleteSurvey = async (req, res) => {
 module.exports = {
     getHome,
     createSurvey,
-    showSurveys,
+    showSurveys,   
     voteSurvey,
     showResults,
     deleteSurvey 

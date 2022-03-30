@@ -6,6 +6,8 @@
 
       <a href="/" class="btn btn-success mt-3 col-md-2" role="button">Create Survey</a>  
 
+     
+
       {{#each surveys}}
         <div class="row">
           <div class="col-3 mt-3">                     
@@ -24,7 +26,15 @@
               </div>          
             </div> 
           </div>         
-        </div>    
+        </div>   
+
+       <ul>
+          {{#each users}}
+         <li>{{email}}</li>
+       {{/each}}
+         </ul>
+
+
       {{/each}}    
 
     {{else}}   
