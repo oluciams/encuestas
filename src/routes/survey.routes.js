@@ -4,16 +4,11 @@ const {getHome, showCreateForm, createSurvey, showSurveys, voteSurvey, showResul
 const {requireUser} = require ('../middleware/auth.middleware')
 const app = require('../index')
 
-
-router.get('/', getHome)
-
-//router.post('/', requireUser, createSurvey)
+router.get('/', showSurveys)
 
 router.get('/createSurvey', showCreateForm)
 
 router.post('/createSurvey', requireUser, createSurvey)
-
-router.get('/surveys', showSurveys)
 
 router.get('/vote', voteSurvey)
 

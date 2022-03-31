@@ -12,6 +12,8 @@ const createUser = async(req,res)=>{
             email: req.body.email,
             password: req.body.password
         })
+        const userEmail = req.body.email
+        console.log(userEmail)
         req.flash('success_msg', 'User registered successfully')
         res.redirect('/login')        
     }catch (error) {

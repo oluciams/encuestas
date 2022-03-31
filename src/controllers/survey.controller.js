@@ -37,9 +37,9 @@ const createSurvey = async (req,res)=>{
             const options = []
             options.push({option: option1})
             options.push({option: option2})
-
+            
             const survey = new Survey({title, description, options, user: res.locals.user});
-            await survey.save();        
+            await survey.save();                
             req.flash('success_msg', 'Survey added successfully')
             res.redirect('/results')
             
@@ -60,14 +60,33 @@ const createSurvey = async (req,res)=>{
 
 const showSurveys = async (req, res) => {
     try {       
-        const surveys = await Survey.find();
-        res.render('surveys', { surveys })    
+        // const surveys = await Survey.find();
+        // res.render('surveys', { surveys })
+
+
+        const users = await User.find();
+        const initSurveys = await Survey.find(); 
+
+        const surveys = initSurveys.map(function (survey){
+            let newsurvey = survey
+            //console.log(users)
+            newsurvey.email = '@'
+            //console.log(newsurvey)
+            return newsurvey
+            
+        })
+       //console.log(surveysEmail)          
+        
+        
+        
+        
+        res.render('surveys', { surveys }) 
+       // console.log(surveys)   
+            
     }catch (error) {
         throw new Error(error)
     }
 }
-
-
 
 const voteSurvey = async (req, res) => {
 
