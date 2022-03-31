@@ -43,9 +43,8 @@ const logoutUser = (req,res)=>{
     
     req.session = null    
     res.clearCookie('session')
-    res.clearCookie('session.sig')    
-    //res.render('logout')
-    res.render('index')
+    res.clearCookie('session.sig')      
+    res.redirect('/')
 }
 
 module.exports = {  

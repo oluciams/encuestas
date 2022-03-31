@@ -4,9 +4,7 @@
 
     {{#if user }}  
 
-      <a href="/" class="btn btn-success mt-3 col-md-2" role="button">Create Survey</a>  
-
-     
+      <a href="/createSurvey" class="btn btn-success mt-3 col-md-2" role="button">Create Survey</a>       
 
       {{#each surveys}}
         <div class="row">
@@ -27,13 +25,6 @@
             </div> 
           </div>         
         </div>   
-
-       <ul>
-          {{#each users}}
-         <li>{{email}}</li>
-       {{/each}}
-         </ul>
-
 
       {{/each}}    
 

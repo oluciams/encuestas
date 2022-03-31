@@ -5,10 +5,18 @@ const app = require('../index')
 
 const getHome = async (req, res)=>{ 
     const surveys = await Survey.find();   
-   res.render('index', {surveys} )       
+   res.render('surveys', {surveys} )       
 }
 
-const createSurvey = async (req,res)=>{
+const showCreateForm = async (req, res) => {
+    try {       
+        res.render('createSurvey')    
+    }catch (error) {
+        throw new Error(error)
+    }
+}
+
+const createSurvey = async (req,res)=>{    
     const { title, description, option1, option2 } = req.body;
     const errors = []
 
@@ -19,7 +27,7 @@ const createSurvey = async (req,res)=>{
         errors.push({ text: "Please Write a Description" });
       }
     if (errors.length > 0) {
-        res.render("index", {
+        res.render('createSurvey', {
           errors,
           title,
           description,
@@ -58,6 +66,8 @@ const showSurveys = async (req, res) => {
         throw new Error(error)
     }
 }
+
+
 
 const voteSurvey = async (req, res) => {
 
@@ -115,6 +125,7 @@ const deleteSurvey = async (req, res) => {
 
 module.exports = {
     getHome,
+    showCreateForm,
     createSurvey,
     showSurveys,   
     voteSurvey,
