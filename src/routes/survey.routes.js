@@ -1,6 +1,6 @@
 const router = require('express').Router()
 
-const {getHome, showCreateForm, createSurvey, showSurveys, voteSurvey, showResults, deleteSurvey } = require('../controllers/survey.controller')
+const {showCreateForm, createSurvey, showSurveys, voteSurvey, showResults, deleteSurvey } = require('../controllers/survey.controller')
 const {requireUser} = require ('../middleware/auth.middleware')
 const app = require('../index')
 

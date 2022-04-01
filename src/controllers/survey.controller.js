@@ -3,11 +3,6 @@ const User = require('../models/modelUser')
 const app = require('../index')
 
 
-const getHome = async (req, res)=>{ 
-    const surveys = await Survey.find();   
-   res.render('surveys', {surveys} )       
-}
-
 const showCreateForm = async (req, res) => {
     try {       
         res.render('createSurvey')    
@@ -49,39 +44,19 @@ const createSurvey = async (req,res)=>{
     }    
 }
 
-// const showSurveys = async (req, res) => {
-//     try {
-//         const surveys = await Survey.find({user: res.locals.user});
-//         res.render('surveys', { surveys })
-//     }catch (error) {
-//         throw new Error(error)
-//     }
-// }
-
 const showSurveys = async (req, res) => {
-    try {       
-        // const surveys = await Survey.find();
-        // res.render('surveys', { surveys })
-
+    try { 
 
         const users = await User.find();
-        const initSurveys = await Survey.find(); 
+        const initSurveys = await Survey.find();        
 
         const surveys = initSurveys.map(function (survey){
+            let user = users.find(user => user._id.toString() === survey.user.toString())  
             let newsurvey = survey
-            //console.log(users)
-            newsurvey.email = '@'
-            //console.log(newsurvey)
-            return newsurvey
-            
-        })
-       //console.log(surveysEmail)          
-        
-        
-        
-        
-        res.render('surveys', { surveys }) 
-       // console.log(surveys)   
+            newsurvey.email = user.email
+            return newsurvey           
+        })              
+        res.render('surveys', { surveys })     
             
     }catch (error) {
         throw new Error(error)
@@ -143,7 +118,6 @@ const deleteSurvey = async (req, res) => {
 
 
 module.exports = {
-    getHome,
     showCreateForm,
     createSurvey,
     showSurveys,   
