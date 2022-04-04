@@ -65,9 +65,17 @@ const showSurveys = async (req, res) => {
 
 const voteSurvey = async (req, res) => {
 
-    try {        
-        const surveys = await Survey.find();
+    try { 
+        const users = await User.find();       
+        const initSurveys = await Survey.find();
+        const surveys = initSurveys.map(function (survey){
+            let user = users.find(user => user._id.toString() === survey.user.toString())  
+            let newsurvey = survey
+            newsurvey.email = user.email
+            return newsurvey           
+        })              
         res.render('vote', {surveys})
+
     }catch (error) {
         throw new Error(error)
     }
@@ -75,7 +83,14 @@ const voteSurvey = async (req, res) => {
 
 const showResults = async (req, res) => {
     try {
-        const surveys = await Survey.find();
+        const users = await User.find(); 
+        const initSurveys = await Survey.find();
+        const surveys = initSurveys.map(function (survey){
+            let user = users.find(user => user._id.toString() === survey.user.toString())  
+            let newsurvey = survey
+            newsurvey.email = user.email
+            return newsurvey           
+        })              
         res.render('results', {surveys})
     }catch (error) {
         throw new Error(error)
@@ -90,7 +105,8 @@ const deleteSurvey = async (req, res) => {
         // await Survey.deleteOne({_id:id}) 
        
         req.flash('success_msg', 'Survey deleted successfully')           
-        res.redirect('/surveys')
+        res.redirect('/')
+        //res.redirect('/surveys')
     }catch (error) {
         throw new Error(error)
     }

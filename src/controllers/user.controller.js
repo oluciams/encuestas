@@ -31,7 +31,8 @@ const loginUser = async(req,res)=>{
         if(user){
             req.session.userId = user._id
             req.flash('success_msg', 'User logged in successfully')
-            return res.redirect('/surveys')
+            return res.redirect('/')
+            //return res.redirect('/surveys')
         }else{
             req.flash('danger_msg', 'wrong email or password. Try again!')
             res.redirect('/login')
