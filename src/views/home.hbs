@@ -1,0 +1,31 @@
+<div class="container">
+
+  {{#if surveys}}
+
+    {{#each surveys}}
+      <div class="row">
+        <div class="col-3 mt-3">                     
+          <div class="card" style="width: 18rem;">              
+            <div class="card-body">
+              <h5 class="card-title">{{title}}</h5>                       
+              <p class="card-text"><small class="text-muted">creado por {{email}}</small></p>                
+              <p class="card-text">{{description}}</p>
+            </div>
+            <div class="card footer">
+              <div class="d-grid gap-2 d-md-flex justify-content-between">           
+                <a href="#" class="btn text-muted">Cantidad votos</a>                   
+                <a href="/vote" class="btn btn-secondary">Votar</a>
+              </div>
+            </div>          
+          </div> 
+        </div>         
+      </div>
+    {{/each}}
+
+  {{else}}
+
+   <h3 class="text-center mt-4">No hay encuestas</h3>
+
+  {{/if}}
+
+</div>

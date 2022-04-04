@@ -2,7 +2,6 @@ const Survey = require('../models/modelSurvey')
 const User = require('../models/modelUser')
 const app = require('../index')
 
-
 const showCreateForm = async (req, res) => {
     try {       
         res.render('createSurvey')    
@@ -45,8 +44,8 @@ const createSurvey = async (req,res)=>{
 }
 
 const showSurveys = async (req, res) => {
-    try { 
-
+    
+    try {    
         const users = await User.find();
         const initSurveys = await Survey.find();        
 
@@ -55,8 +54,15 @@ const showSurveys = async (req, res) => {
             let newsurvey = survey
             newsurvey.email = user.email
             return newsurvey           
-        })              
-        res.render('surveys', { surveys })     
+        })
+        const user = res.locals.user
+        if(user){
+            res.render('surveys', { surveys })    
+
+        }    else{
+            res.render('home', { surveys })
+
+        }         
             
     }catch (error) {
         throw new Error(error)
@@ -104,41 +110,61 @@ const deleteSurvey = async (req, res) => {
         // const surveys = await Survey.find({user: res.locals.user}); 
         // await Survey.deleteOne({_id:id}) 
        
-        req.flash('success_msg', 'Survey deleted successfully')           
+        req.flash('success_msg', 'Survey deleted successfully')     
         res.redirect('/')
-        //res.redirect('/surveys')
+        
     }catch (error) {
         throw new Error(error)
     }
 }
 
 
-// const updateStatus =  async(req, res)=>{
+const updateVote =  async(req, res)=>{
+   
+    let votecheck = req.body.votecheck  
+
+    if(votecheck === "on"){
+        votecheck = true
+    }else {
+        votecheck = false 
+    }  
+
+    console.log(votecheck)
+
+    try{     
+       await Survey.findByIdAndUpdate(req.params.id, {vote: votecheck})      
+        res.redirect('/results')        
+    }catch (error) {
+        throw new Error(error)
+    }
+}
+
+//const updateStatus =  async(req, res)=>{
 
    
-//     let statuscheck = req.body.statuscheck  
-
-//     if(statuscheck === "on"){
-//         statuscheck = true
-//     }else {
-//         statuscheck = false 
-//     }  
-
-//     try{     
-//        await Task.findByIdAndUpdate(req.params.id, {status: statuscheck})      
-//         res.redirect('/tasks')        
-//     }catch (error) {
-//         throw new Error(error)
-//     }
-// }
-
+    //     let statuscheck = req.body.statuscheck  
+    
+    //     if(statuscheck === "on"){
+    //         statuscheck = true
+    //     }else {
+    //         statuscheck = false 
+    //     }  
+    
+    //     try{     
+    //        await Task.findByIdAndUpdate(req.params.id, {status: statuscheck})      
+    //         res.redirect('/tasks')        
+    //     }catch (error) {
+    //         throw new Error(error)
+    //     }
+    // }
 
 module.exports = {
+    
     showCreateForm,
     createSurvey,
     showSurveys,   
     voteSurvey,
     showResults,
-    deleteSurvey 
+    deleteSurvey, updateVote
     // updateStatus    
 }

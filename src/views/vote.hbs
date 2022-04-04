@@ -15,13 +15,16 @@
 
         <div class="col-6 mt-4 mb-4 border border-2">          
           <p class="mx-3 mt-3">Selecciona una opción:</p>
-            {{#each options}}           
+            {{#each options}} 
+
+            <form action="/results/{{_id}}" method="POST">    
             <div class="form-check mx-3 mt-3 mb-3">
-              <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+              <input class="form-check-input" type="checkbox" value="" id="{{_id}}" name="votecheck" onChange="this.form.submit()">
               <label class="form-check-label" for="flexCheckDefault">
               {{option}}
               </label>
-            </div>             
+            </div>
+            </form>             
             {{/each}}
         </div>
         <div class="col-6 d-flex justify-content-end mt-3">

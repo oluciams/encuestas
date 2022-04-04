@@ -30,9 +30,9 @@ const loginUser = async(req,res)=>{
         const user = await User.authenticate(req.body.email, req.body.password)
         if(user){
             req.session.userId = user._id
-            req.flash('success_msg', 'User logged in successfully')
-            return res.redirect('/')
+            req.flash('success_msg', 'User logged in successfully')  
             //return res.redirect('/surveys')
+            return res.redirect('/')
         }else{
             req.flash('danger_msg', 'wrong email or password. Try again!')
             res.redirect('/login')
