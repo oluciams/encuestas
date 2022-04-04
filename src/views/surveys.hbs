@@ -1,11 +1,8 @@
 <div class="container">
 
-  {{!-- {{#if surveys}} --}}
-  {{!-- {{#if surveys}} 
+  <a href="/createSurvey" class="btn btn-success mt-3 col-md-2" role="button">Create Survey</a>       
 
-    {{#if user }}   --}}
-
-      <a href="/createSurvey" class="btn btn-success mt-3 col-md-2" role="button">Create Survey</a>       
+    {{#if surveys}}
 
       {{#each surveys}}
         <div class="row">
@@ -27,18 +24,23 @@
           </div>         
         </div>   
 
-      {{/each}}    
-{{!-- 
-    {{else}}   
+      {{/each}} 
+
+    {{else}}     
+
+    <h3 class="text-center mt-4">No hay encuestas</h3>
+
+    {{/if}}
+
+    {{!-- {{else}}  
 
       {{#each surveys}}
         <div class="row">
           <div class="col-3 mt-3">                     
-            <div class="card" style="width: 18rem;">
-              <a href="/surveys/delete/{{_id}}?_method=DELETE" class="text-dark text-end mt-1 mx-2"><i class="fas fa-trash-alt"></i></a>
+            <div class="card" style="width: 18rem;">              
               <div class="card-body">
                 <h5 class="card-title">{{title}}</h5>                       
-                <p class="card-text"><small class="text-muted">creado por</small></p>                
+                <p class="card-text"><small class="text-muted">creado por {{email}}</small></p>                
                 <p class="card-text">{{description}}</p>
               </div>
               <div class="card footer">
@@ -50,18 +52,8 @@
             </div> 
           </div>         
         </div>
-      {{/each}}   
-
-    {{/if}}
-
-  {{else}}
-
-    <a href="/createSurvey" class="btn btn-success mt-3 col-md-2" role="button">Create Survey</a> 
-
-    <h3 class="text-center mt-4">No hay encuestas</h3>
-
-  {{/if}} --}}
-
+      {{/each}}
+   --}}
 </div>
 
 
