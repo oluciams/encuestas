@@ -17,7 +17,7 @@ router.get('/vote', voteSurvey)
 
 router.get('/results', showResults)
 
-router.post('/results/:id', updateVote)
+//router.post('/results/:id', updateVote)
 
 router.delete('/surveys/delete/:id', deleteSurvey)
 

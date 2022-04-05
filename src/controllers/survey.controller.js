@@ -132,12 +132,12 @@ const updateVote =  async(req, res)=>{
 
     console.log(votecheck)
 
-    try{     
-       await Survey.findByIdAndUpdate(req.params.id, {vote: votecheck})      
-        res.redirect('/results')        
-    }catch (error) {
-        throw new Error(error)
-    }
+    // try{     
+    //    await Survey.findByIdAndUpdate(req.params.id, {vote: votecheck})      
+    //     //res.redirect('/vote')        
+    // }catch (error) {
+    //     throw new Error(error)
+    // }
 }
 
 //const updateStatus =  async(req, res)=>{

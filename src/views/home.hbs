@@ -2,10 +2,10 @@
 
   {{#if surveys}}
 
-    {{#each surveys}}
-      <div class="row">
-        <div class="col-3 mt-3">                     
-          <div class="card" style="width: 18rem;">              
+    <div class="d-flex flex-wrap mt-3">
+      {{#each surveys}}
+        <div class="col">                           
+          <div class="card h-100" style="width: 18rem;">              
             <div class="card-body">
               <h5 class="card-title">{{title}}</h5>                       
               <p class="card-text"><small class="text-muted">creado por {{email}}</small></p>                
@@ -17,14 +17,14 @@
                 <a href="/vote" class="btn btn-secondary">Votar</a>
               </div>
             </div>          
-          </div> 
-        </div>         
-      </div>
-    {{/each}}
+          </div>          
+        </div>
+      {{/each}}
+     </div>
 
   {{else}}
 
-   <h3 class="text-center mt-4">No hay encuestas</h3>
+    <h3 class="text-center mt-4">No hay encuestas</h3>
 
   {{/if}}
 
