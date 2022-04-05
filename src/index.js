@@ -67,6 +67,15 @@ app.engine('.hbs', hbs({
    runtimeOptions: {
       allowProtoPropertiesByDefault: true,
       allowProtoMethodsByDefault: true,
+   },
+   helpers: {
+      sayHello: function() {return "Hello"},
+      eq: function(v1, v2, options) {
+         if (v1 === v2) {
+            return options.fn(this)
+         }
+         return options.inverse(this)
+      }
    },   
    layoutsDir:path.join(app.get('views'),'layouts'),
    partialsDir:path.join(app.get('views'),'partials'),
@@ -75,6 +84,8 @@ app.engine('.hbs', hbs({
 }))
  
 app.set('view engine', 'hbs')
+
+// Routes
 
 app.use(userRoutes)
 app.use(surveyRoutes)

@@ -3,13 +3,16 @@
   {{#if surveys}}
 
     <a href="/createSurvey" class="btn btn-success mt-3 col-md-2" role="button">Create Survey</a> 
+    
 
       {{#each surveys}}
         <div class="row">
           <div class="col-3 mt-3">                     
-            <div class="card" style="width: 18rem;">
-              <a href="/surveys/delete/{{_id}}?_method=DELETE" class="text-dark text-end mt-1 mx-2"><i class="fas fa-trash-alt"></i></a>
-              <div class="card-body">
+            <div class="card" style="width: 18rem;"> 
+                {{#eq @root.emailLoguedUser this.email}}
+                <a href="/surveys/delete/{{_id}}?_method=DELETE" class="text-dark text-end mt-1 mx-2"><i class="fas fa-trash-alt"></i></a>             
+                {{/eq}}        
+                <div class="card-body">
                 <h5 class="card-title">{{title}}</h5>                                                  
                 <p class="card-text"><small class="text-muted">creado por {{email}}</small></p>                
                 <p class="card-text">{{description}}</p>

@@ -47,7 +47,7 @@ const showSurveys = async (req, res) => {
     
     try {    
         const users = await User.find();
-        const initSurveys = await Survey.find();        
+        const initSurveys = await Survey.find();  
 
         const surveys = initSurveys.map(function (survey){
             let user = users.find(user => user._id.toString() === survey.user.toString())  
@@ -57,7 +57,8 @@ const showSurveys = async (req, res) => {
         })
         const user = res.locals.user
         if(user){
-            res.render('surveys', { surveys })    
+            let emailLoguedUser = user.email 
+            res.render('surveys', { surveys, emailLoguedUser })    
 
         }    else{
             res.render('home', { surveys })
