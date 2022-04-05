@@ -80,8 +80,9 @@ const voteSurvey = async (req, res) => {
             let newsurvey = survey
             newsurvey.email = user.email
             return newsurvey           
-        })              
-        res.render('vote', {surveys})
+        })
+        const survey = await Survey.findById(req.params.id)              
+        res.render('vote', {surveys, survey})
 
     }catch (error) {
         throw new Error(error)
@@ -119,10 +120,24 @@ const deleteSurvey = async (req, res) => {
     }
 }
 
+// const updateSurvey =  async(req, res)=>{
+//     try{
+//         const {vote} = req.body 
+//        await Survey.findByIdAndUpdate(req.params.id, {vote})
+//        req.flash('success_msg', 'Survey updated successfully')     
+//         res.redirect('/results')     
+           
+//     }catch (error) {
+//         throw new Error(error)
+//     }
+// }
 
-const updateVote =  async(req, res)=>{
+
+
+const updateVote=  async(req, res)=>{ 
+  
    
-    let votecheck = req.body.votecheck  
+    let votecheck = req.body.votecheck
 
     if(votecheck === "on"){
         votecheck = true
@@ -132,12 +147,17 @@ const updateVote =  async(req, res)=>{
 
     console.log(votecheck)
 
-    // try{     
-    //    await Survey.findByIdAndUpdate(req.params.id, {vote: votecheck})      
-    //     //res.redirect('/vote')        
-    // }catch (error) {
-    //     throw new Error(error)
-    // }
+    try{     
+       await Survey.findByIdAndUpdate(req.params.id, {vote: votecheck})
+            if(vote === true){
+                let vote = vote +1
+                return vote
+            }      
+        res.redirect('/results')     
+          
+    }catch (error) {
+        throw new Error(error)
+    }
 }
 
 //const updateStatus =  async(req, res)=>{
@@ -159,6 +179,17 @@ const updateVote =  async(req, res)=>{
     //     }
     // }
 
+    // const updateTask =  async(req, res)=>{
+    //     try{        
+    //         const {title, description} = req.body
+    //         await Task.findByIdAndUpdate(req.params.id, {title, description})
+    //         req.flash('success_msg', 'Task updated successfully')
+    //         res.redirect('/tasks')   
+    //     }catch (error) {
+    //         throw new Error(error)
+    //     }
+    // }
+
 module.exports = {
     
     showCreateForm,
@@ -166,6 +197,6 @@ module.exports = {
     showSurveys,   
     voteSurvey,
     showResults,
-    deleteSurvey, updateVote
-    // updateStatus    
+    deleteSurvey,
+    updateVote      
 }
