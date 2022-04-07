@@ -13,7 +13,9 @@
       </div>  
     </div>
 
-    <form action="/survey/{{survey._id}}" method="POST">    
+     <form action="/surveys/{{survey._id}}?_method=PUT" method="POST"> 
+      <input type="hidden" name="_method" value="PUT">
+
       <div class="col-6 mt-4 mb-4 border border-2">          
         <p class="mx-3 mt-3">Selecciona una opción:</p>
           {{#each survey.options}} 

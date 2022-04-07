@@ -87,8 +87,8 @@ app.set('view engine', 'hbs')
 
 // Routes
 
-app.use(userRoutes)
 app.use(surveyRoutes)
+app.use(userRoutes)
 
 //archivos estaticos imagenes, estilos
 app.use(express.static(path.join(__dirname, "public")))

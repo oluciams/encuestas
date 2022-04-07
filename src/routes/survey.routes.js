@@ -1,6 +1,6 @@
 const router = require('express').Router()
 
-const {showCreateForm, createSurvey, showSurveys, voteSurvey, showResults, deleteSurvey, updateVote} = require('../controllers/survey.controller')
+const {showCreateForm, createSurvey, showSurveys, voteSurvey, showResults, deleteSurvey, updateSurvey} = require('../controllers/survey.controller')
 const {requireUser} = require ('../middleware/auth.middleware')
 const app = require('../index')
 
@@ -11,17 +11,18 @@ router.get('/createSurvey', showCreateForm)
 
 router.post('/createSurvey', requireUser, createSurvey)
 
-//router.get('/vote', voteSurvey)
+router.get('/results/:id', showResults)
 
-router.get('/results', showResults)
+router.get('/surveys/:id', voteSurvey)
 
-router.get('/surveys/edit/:id', voteSurvey)
+router.put('/surveys/:id', updateSurvey)
 
-router.post('survey/:id', updateVote)
+router.delete('/surveys/delete/:id', deleteSurvey)
+
+// router.post('survey/:id/results', updateVote)
 
 //router.put('/edit/:id', updateSurvey)
 
-router.delete('/surveys/delete/:id', deleteSurvey)
 
 
 module.exports = router 

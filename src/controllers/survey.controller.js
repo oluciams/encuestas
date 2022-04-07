@@ -98,8 +98,9 @@ const showResults = async (req, res) => {
             let newsurvey = survey
             newsurvey.email = user.email
             return newsurvey           
-        })              
-        res.render('results', {surveys})
+        }) 
+        const survey = await Survey.findById(req.params.id)              
+        res.render('results', {surveys, survey})
     }catch (error) {
         throw new Error(error)
     }
@@ -108,10 +109,7 @@ const showResults = async (req, res) => {
 const deleteSurvey = async (req, res) => {
     try {        
         const { id } = req.params;
-        await Survey.deleteOne({_id:id })
-        // const surveys = await Survey.find({user: res.locals.user}); 
-        // await Survey.deleteOne({_id:id}) 
-       
+        await Survey.deleteOne({_id:id })   
         req.flash('success_msg', 'Survey deleted successfully')     
         res.redirect('/')
         
@@ -120,45 +118,48 @@ const deleteSurvey = async (req, res) => {
     }
 }
 
-// const updateSurvey =  async(req, res)=>{
-//     try{
-//         const {vote} = req.body 
-//        await Survey.findByIdAndUpdate(req.params.id, {vote})
-//        req.flash('success_msg', 'Survey updated successfully')     
+const updateSurvey =  async(req, res)=>{
+    try{
+        const {id} = req.params;
+        //await Survey.findByIdAndUpdate(req.params.id)
+        console.log(id)
+        //req.flash('success_msg', 'Survey updated successfully')     
+        // res.redirect('/results')     
+        res.redirect(`/results/${id}`) 
+    }catch (error) {
+        throw new Error(error)
+    }
+
+
+}
+
+
+
+// const updateVote=  async(req, res)=>{ 
+  
+   
+//     let votecheck = req.body.votecheck
+
+//     if(votecheck === "on"){
+//         votecheck = true
+//     }else {
+//         votecheck = false 
+//     }  
+
+//     console.log(votecheck)
+
+//     try{     
+//        await Survey.findByIdAndUpdate(req.params.id, {vote: votecheck})
+//             if(vote === true){
+//                 let vote = vote +1
+//                 return vote
+//             }      
 //         res.redirect('/results')     
-           
+          
 //     }catch (error) {
 //         throw new Error(error)
 //     }
 // }
-
-
-
-const updateVote=  async(req, res)=>{ 
-  
-   
-    let votecheck = req.body.votecheck
-
-    if(votecheck === "on"){
-        votecheck = true
-    }else {
-        votecheck = false 
-    }  
-
-    console.log(votecheck)
-
-    try{     
-       await Survey.findByIdAndUpdate(req.params.id, {vote: votecheck})
-            if(vote === true){
-                let vote = vote +1
-                return vote
-            }      
-        res.redirect('/results')     
-          
-    }catch (error) {
-        throw new Error(error)
-    }
-}
 
 //const updateStatus =  async(req, res)=>{
 
@@ -198,5 +199,5 @@ module.exports = {
     voteSurvey,
     showResults,
     deleteSurvey,
-    updateVote      
+    updateSurvey      
 }
