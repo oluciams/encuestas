@@ -34,8 +34,8 @@ const createSurvey = async (req,res)=>{
             
             const survey = new Survey({title, description, options, user: res.locals.user});
             await survey.save();                
-            req.flash('success_msg', 'Survey added successfully')
-            res.redirect('/')  
+            req.flash('success_msg', 'Survey added successfully')    
+            res.redirect(`results/${survey.id}`)  
             
         }catch (error) {
             throw new Error(error)
@@ -60,9 +60,8 @@ const showSurveys = async (req, res) => {
             let emailLoguedUser = user.email 
             res.render('surveys', { surveys, emailLoguedUser })    
 
-        }    else{
+        }else{
             res.render('home', { surveys })
-
         }         
             
     }catch (error) {
@@ -73,16 +72,17 @@ const showSurveys = async (req, res) => {
 const voteSurvey = async (req, res) => {
 
     try { 
-        const users = await User.find();             
-        const initSurveys = await Survey.find();
-        const surveys = initSurveys.map(function (survey){
-            let user = users.find(user => user._id.toString() === survey.user.toString())  
-            let newsurvey = survey
-            newsurvey.email = user.email
-            return newsurvey           
-        })
+        // const users = await User.find();             
+        // const initSurveys = await Survey.find();
+        // const surveys = initSurveys.map(function (survey){
+        //     let user = users.find(user => user._id.toString() === survey.user.toString())  
+        //     let newsurvey = survey
+        //     newsurvey.email = user.email
+        //     return newsurvey           
+        // })
         const survey = await Survey.findById(req.params.id)              
-        res.render('vote', {surveys, survey})
+        res.render('vote', {survey})
+        //res.render('vote', {surveys, survey})
        
 
     }catch (error) {
@@ -92,16 +92,17 @@ const voteSurvey = async (req, res) => {
 
 const showResults = async (req, res) => {
     try {
-        const users = await User.find(); 
-        const initSurveys = await Survey.find();
-        const surveys = initSurveys.map(function (survey){
-            let user = users.find(user => user._id.toString() === survey.user.toString())  
-            let newsurvey = survey
-            newsurvey.email = user.email
-            return newsurvey           
-        }) 
+        // const users = await User.find(); 
+        // const initSurveys = await Survey.find();
+        // const surveys = initSurveys.map(function (survey){
+        //     let user = users.find(user => user._id.toString() === survey.user.toString())  
+        //     let newsurvey = survey
+        //     newsurvey.email = user.email
+        //     return newsurvey           
+        // }) 
         const survey = await Survey.findById(req.params.id)              
-        res.render('results', {surveys, survey})
+        res.render('results', {survey})
+        //res.render('results', {surveys, survey})
     }catch (error) {
         throw new Error(error)
     }
@@ -130,8 +131,6 @@ const updateSurvey =  async(req, res)=>{
     }catch (error) {
         throw new Error(error)
     }
-
-
 }
 
 

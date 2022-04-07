@@ -19,10 +19,4 @@ router.put('/surveys/:id', updateSurvey)
 
 router.delete('/surveys/delete/:id', deleteSurvey)
 
-// router.post('survey/:id/results', updateVote)
-
-//router.put('/edit/:id', updateSurvey)
-
-
-
 module.exports = router 
