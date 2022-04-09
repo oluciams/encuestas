@@ -20,7 +20,7 @@
         <p class="mx-3 mt-3">Selecciona una opción:</p>
           {{#each survey.options}} 
             <div class="form-check mx-3 mt-3 mb-3">
-              <input class="form-check-input" type="checkbox" value="{{survey.vote}}" id="{{option._id}}" name="votecheck" onChange="this.form.submit()">
+              <input class="form-check-input" type="checkbox" name="votecheck" onChange="this.form.submit()">
               <label class="form-check-label" for="flexCheckDefault">
               {{option}}
               </label>
@@ -28,7 +28,7 @@
           {{/each}}            
       </div>
       <div class="col-6 d-flex justify-content-end mt-3">
-        <button  type="submit" class="btn btn-success">Votar !</button>
+        <button type="submit" class="btn btn-success">Votar !</button>
       </div>
     </form>             
   </div>

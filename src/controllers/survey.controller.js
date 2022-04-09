@@ -1,6 +1,9 @@
 const Survey = require('../models/modelSurvey')
 const User = require('../models/modelUser')
 const app = require('../index')
+const { ObjectId } = require('bson')
+//const ObjectID = require('mongodb').ObjectID;
+
 
 const showCreateForm = async (req, res) => {
     try {       
@@ -133,63 +136,40 @@ const updateSurvey =  async(req, res)=>{
     }
 }
 
+const updateVote=  async(req, res)=>{   
+    // let votecheck = req.body.votecheck
+    // if(votecheck === "on"){
+    //     votecheck = true
+        
+    // }else {
+    //     votecheck = false 
+    // }      
 
-
-// const updateVote=  async(req, res)=>{ 
-  
-   
-//     let votecheck = req.body.votecheck
-
-//     if(votecheck === "on"){
-//         votecheck = true
-//     }else {
-//         votecheck = false 
-//     }  
-
-//     console.log(votecheck)
-
-//     try{     
-//        await Survey.findByIdAndUpdate(req.params.id, {vote: votecheck})
-//             if(vote === true){
-//                 let vote = vote +1
-//                 return vote
-//             }      
-//         res.redirect('/results')     
+    try{  
+        await Survey.updateOne(
+            {'_id': ObjectId(req.params.id), "options.option": "Medellín"},
+            {$set: {"options.$.vote": 1}}
+            
+        // //    // {title: "prueba 2", "options.option": "Medellín"},
+        // //     //{$set: {"options.$.vote": 1}}
+        )
+        // console.log(id)
+        //console.log(ObjectId(req.params.id))
+        //console.log(vote)
+        
+    //const survey = await Survey.findById(req.params.id)
+    //    const options = survey.options       
+    //    let optionId = options.find(option => option._id.toString() === "624f0373cabda71be066df7b") 
+    //    let id = optionId._id.toString()
+    //    let voteNew = optionId.vote       
+    //     console.log(id)
+    //     console.log(voteNew) 
           
-//     }catch (error) {
-//         throw new Error(error)
-//     }
-// }
-
-//const updateStatus =  async(req, res)=>{
-
-   
-    //     let statuscheck = req.body.statuscheck  
-    
-    //     if(statuscheck === "on"){
-    //         statuscheck = true
-    //     }else {
-    //         statuscheck = false 
-    //     }  
-    
-    //     try{     
-    //        await Task.findByIdAndUpdate(req.params.id, {status: statuscheck})      
-    //         res.redirect('/tasks')        
-    //     }catch (error) {
-    //         throw new Error(error)
-    //     }
-    // }
-
-    // const updateTask =  async(req, res)=>{
-    //     try{        
-    //         const {title, description} = req.body
-    //         await Task.findByIdAndUpdate(req.params.id, {title, description})
-    //         req.flash('success_msg', 'Task updated successfully')
-    //         res.redirect('/tasks')   
-    //     }catch (error) {
-    //         throw new Error(error)
-    //     }
-    // }
+          
+    }catch (error) {
+        throw new Error(error)
+    }
+}
 
 module.exports = {
     
@@ -199,5 +179,6 @@ module.exports = {
     voteSurvey,
     showResults,
     deleteSurvey,
-    updateSurvey      
+    updateSurvey,
+    updateVote      
 }
