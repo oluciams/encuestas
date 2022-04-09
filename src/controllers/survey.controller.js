@@ -145,18 +145,15 @@ const updateVote=  async(req, res)=>{
     //     votecheck = false 
     // }      
 
-    try{  
+    try{ 
+        const  optionSelected = req.body.optionSelected
+
         await Survey.updateOne(
-            {'_id': ObjectId(req.params.id), "options.option": "Medellín"},
-            {$set: {"options.$.vote": 1}}
-            
-        // //    // {title: "prueba 2", "options.option": "Medellín"},
-        // //     //{$set: {"options.$.vote": 1}}
-        )
-        // console.log(id)
-        //console.log(ObjectId(req.params.id))
-        //console.log(vote)
-        
+            {'_id': ObjectId(req.params.id), "options.option": optionSelected},
+            {$set: {"options.$.vote": 3}}                 
+        )       
+            console.log(optionSelected)
+
     //const survey = await Survey.findById(req.params.id)
     //    const options = survey.options       
     //    let optionId = options.find(option => option._id.toString() === "624f0373cabda71be066df7b") 

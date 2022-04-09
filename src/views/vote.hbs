@@ -20,7 +20,7 @@
         <p class="mx-3 mt-3">Selecciona una opción:</p>
           {{#each survey.options}} 
             <div class="form-check mx-3 mt-3 mb-3">
-              <input class="form-check-input" type="checkbox" name="votecheck" onChange="this.form.submit()">
+              <input class="form-check-input" type="checkbox" value="{{option}}" name="optionSelected" onChange="this.form.submit()">
               <label class="form-check-label" for="flexCheckDefault">
               {{option}}
               </label>
