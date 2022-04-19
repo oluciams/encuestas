@@ -137,33 +137,22 @@ const updateSurvey =  async(req, res)=>{
 }
 
 const updateVote=  async(req, res)=>{   
-    // let votecheck = req.body.votecheck
-    // if(votecheck === "on"){
-    //     votecheck = true
-        
-    // }else {
-    //     votecheck = false 
-    // }      
-
+    
     try{ 
-        const  optionSelected = req.body.optionSelected
+        const  optionSelected = req.body.optionSelected    
+       
+        let object = await Survey.findById({_id:ObjectId(req.params.id)})        
+        let optionsObject = object.options       
+        let optionVote = optionsObject.find(element => element.option === optionSelected)       
+        let voteValue = await optionVote.vote        
+        voteValue += 1
 
         await Survey.updateOne(
             {'_id': ObjectId(req.params.id), "options.option": optionSelected},
-            {$set: {"options.$.vote": 3}}                 
-        )       
-            console.log(optionSelected)
-
-    //const survey = await Survey.findById(req.params.id)
-    //    const options = survey.options       
-    //    let optionId = options.find(option => option._id.toString() === "624f0373cabda71be066df7b") 
-    //    let id = optionId._id.toString()
-    //    let voteNew = optionId.vote       
-    //     console.log(id)
-    //     console.log(voteNew) 
+            {$set: {"options.$.vote": voteValue }}                 
+        )          
           
-          
-    }catch (error) {
+    } catch (error) {
         throw new Error(error)
     }
 }
