@@ -123,22 +123,11 @@ const deleteSurvey = async (req, res) => {
     }
 }
 
-const updateSurvey =  async(req, res)=>{
-    try{
-        const {id} = req.params;
-        //await Survey.findByIdAndUpdate(req.params.id)
-        console.log(id)
-        //req.flash('success_msg', 'Survey updated successfully')     
-        // res.redirect('/results')     
-        res.redirect(`/results/${id}`) 
-    }catch (error) {
-        throw new Error(error)
-    }
-}
-
 const updateVote=  async(req, res)=>{   
     
     try{ 
+        const {id} = req.params;
+
         const  optionSelected = req.body.optionSelected    
        
         let object = await Survey.findById({_id:ObjectId(req.params.id)})        
@@ -150,7 +139,10 @@ const updateVote=  async(req, res)=>{
         await Survey.updateOne(
             {'_id': ObjectId(req.params.id), "options.option": optionSelected},
             {$set: {"options.$.vote": voteValue }}                 
-        )          
+        ) 
+        
+        req.flash('success_msg', 'Survey updated successfully')   
+        res.redirect(`/results/${id}`) 
           
     } catch (error) {
         throw new Error(error)
@@ -164,7 +156,6 @@ module.exports = {
     showSurveys,   
     voteSurvey,
     showResults,
-    deleteSurvey,
-    updateSurvey,
+    deleteSurvey,   
     updateVote      
 }
