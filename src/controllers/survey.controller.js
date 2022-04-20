@@ -75,38 +75,20 @@ const showSurveys = async (req, res) => {
 const voteSurvey = async (req, res) => {
 
     try { 
-        // const users = await User.find();             
-        // const initSurveys = await Survey.find();
-        // const surveys = initSurveys.map(function (survey){
-        //     let user = users.find(user => user._id.toString() === survey.user.toString())  
-        //     let newsurvey = survey
-        //     newsurvey.email = user.email
-        //     return newsurvey           
-        // })
         const survey = await Survey.findById(req.params.id)              
-        res.render('vote', {survey})
-        //res.render('vote', {surveys, survey})
-       
+        res.render('vote', {survey})  
 
-    }catch (error) {
+    } catch (error) {
         throw new Error(error)
     }
 }
 
 const showResults = async (req, res) => {
-    try {
-        // const users = await User.find(); 
-        // const initSurveys = await Survey.find();
-        // const surveys = initSurveys.map(function (survey){
-        //     let user = users.find(user => user._id.toString() === survey.user.toString())  
-        //     let newsurvey = survey
-        //     newsurvey.email = user.email
-        //     return newsurvey           
-        // }) 
+    try {    
         const survey = await Survey.findById(req.params.id)              
         res.render('results', {survey})
-        //res.render('results', {surveys, survey})
-    }catch (error) {
+       
+    } catch (error) {
         throw new Error(error)
     }
 }
@@ -139,9 +121,7 @@ const updateVote=  async(req, res)=>{
         await Survey.updateOne(
             {'_id': ObjectId(req.params.id), "options.option": optionSelected},
             {$set: {"options.$.vote": voteValue }}                 
-        ) 
-        
-        req.flash('success_msg', 'Survey updated successfully')   
+        )   
         res.redirect(`/results/${id}`) 
           
     } catch (error) {
