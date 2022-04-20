@@ -2,6 +2,7 @@ const Survey = require('../models/modelSurvey')
 const User = require('../models/modelUser')
 const app = require('../index')
 const { ObjectId } = require('bson')
+const { options } = require('../routes/survey.routes')
 //const ObjectID = require('mongodb').ObjectID;
 
 
@@ -58,6 +59,8 @@ const showSurveys = async (req, res) => {
             newsurvey.email = user.email
             return newsurvey           
         })
+
+
         const user = res.locals.user
         if(user){
             let emailLoguedUser = user.email 
@@ -116,14 +119,26 @@ const updateVote=  async(req, res)=>{
         let optionsObject = object.options       
         let optionVote = optionsObject.find(element => element.option === optionSelected)       
         let voteValue = await optionVote.vote        
-        voteValue += 1
-
+        voteValue += 1  
+        
         await Survey.updateOne(
             {'_id': ObjectId(req.params.id), "options.option": optionSelected},
-            {$set: {"options.$.vote": voteValue }}                 
-        )   
-        res.redirect(`/results/${id}`) 
-          
+            {$set: {"options.$.vote": voteValue }}
+        )
+
+        let objectVotes = await Survey.findById({_id:ObjectId(req.params.id)}) 
+        let optionsVotes = objectVotes.options
+        let totalvotes = await optionsVotes.reduce((accumulator, option)=>{
+            return accumulator + option.vote;
+        }, 0);
+        
+        await Survey.updateOne(
+            {'_id': ObjectId(req.params.id)},
+            {$set: {"totalVotes": totalvotes }}
+        )
+
+        res.redirect(`/results/${id}`)
+
     } catch (error) {
         throw new Error(error)
     }
