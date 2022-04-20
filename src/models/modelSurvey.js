@@ -28,13 +28,17 @@ const SurveySchema = new Schema ({
     vote: {
       type: Number,
       default: 0
+    },
+    porcentage: {
+      type: Number,
+      default: 0
     }
   }],
 
   totalVotes: {
     type: Number,
     default: 0
-  }
+  }  
 })
 
 module.exports = mongoose.model('surveys', SurveySchema)

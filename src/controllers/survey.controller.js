@@ -58,8 +58,7 @@ const showSurveys = async (req, res) => {
             let newsurvey = survey
             newsurvey.email = user.email
             return newsurvey           
-        })
-
+        })   
 
         const user = res.locals.user
         if(user){
@@ -88,8 +87,13 @@ const voteSurvey = async (req, res) => {
 
 const showResults = async (req, res) => {
     try {    
-        const survey = await Survey.findById(req.params.id)              
+        const survey = await Survey.findById(req.params.id)
+        let options = survey.options    
+        //console.log(options)            
         res.render('results', {survey})
+
+        // const survey = await Survey.findById(req.params.id)                 
+        // res.render('results', {survey})
        
     } catch (error) {
         throw new Error(error)
@@ -128,14 +132,38 @@ const updateVote=  async(req, res)=>{
 
         let objectVotes = await Survey.findById({_id:ObjectId(req.params.id)}) 
         let optionsVotes = objectVotes.options
+
         let totalvotes = await optionsVotes.reduce((accumulator, option)=>{
             return accumulator + option.vote;
         }, 0);
+
         
         await Survey.updateOne(
             {'_id': ObjectId(req.params.id)},
             {$set: {"totalVotes": totalvotes }}
         )
+
+        let resultsVotes = await Survey.findById({_id:ObjectId(req.params.id)})
+        let optionsVotesPorcentage = resultsVotes.options    
+        let valueVote = optionsVotesPorcentage.find(element => element.option === optionSelected)
+        let votePorcentage = valueVote.vote        
+        let totalVotesPorcentage = resultsVotes.totalVotes
+        
+        function porcentage ( partialvalue, totalvalue){
+            return (100*partialvalue)/totalvalue
+            
+        }        
+        const partialvalue = votePorcentage
+        const totalvalue = totalVotesPorcentage    
+        const porcentagesurvey = parseInt(porcentage(partialvalue,totalvalue))
+        
+        console.log(porcentagesurvey)    
+
+        await Survey.updateOne(
+            {'_id': ObjectId(req.params.id), "options.option": optionSelected},
+            {$set: {"options.$.porcentage": porcentagesurvey}}
+        )
+        
 
         res.redirect(`/results/${id}`)
 
