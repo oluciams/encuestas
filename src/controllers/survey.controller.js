@@ -87,13 +87,8 @@ const voteSurvey = async (req, res) => {
 
 const showResults = async (req, res) => {
     try {    
-        const survey = await Survey.findById(req.params.id)
-        let options = survey.options    
-        //console.log(options)            
-        res.render('results', {survey})
-
-        // const survey = await Survey.findById(req.params.id)                 
-        // res.render('results', {survey})
+        const survey = await Survey.findById(req.params.id)          
+        res.render('results', {survey})    
        
     } catch (error) {
         throw new Error(error)
@@ -118,7 +113,8 @@ const updateVote=  async(req, res)=>{
         const {id} = req.params;
 
         const  optionSelected = req.body.optionSelected    
-       
+        
+        // Sumar "uno" a la opción seleccionada
         let object = await Survey.findById({_id:ObjectId(req.params.id)})        
         let optionsObject = object.options       
         let optionVote = optionsObject.find(element => element.option === optionSelected)       
@@ -130,6 +126,7 @@ const updateVote=  async(req, res)=>{
             {$set: {"options.$.vote": voteValue }}
         )
 
+        // Calcular total de los votos
         let objectVotes = await Survey.findById({_id:ObjectId(req.params.id)}) 
         let optionsVotes = objectVotes.options
 
@@ -143,27 +140,21 @@ const updateVote=  async(req, res)=>{
             {$set: {"totalVotes": totalvotes }}
         )
 
-        let resultsVotes = await Survey.findById({_id:ObjectId(req.params.id)})
-        let optionsVotesPorcentage = resultsVotes.options    
-        let valueVote = optionsVotesPorcentage.find(element => element.option === optionSelected)
-        let votePorcentage = valueVote.vote        
-        let totalVotesPorcentage = resultsVotes.totalVotes
+        // Porcentaje
+
+        objectVotes = await Survey.findById({_id:ObjectId(req.params.id)}) 
+        optionsVotes = objectVotes.options
         
-        function porcentage ( partialvalue, totalvalue){
-            return (100*partialvalue)/totalvalue
-            
-        }        
-        const partialvalue = votePorcentage
-        const totalvalue = totalVotesPorcentage    
-        const porcentagesurvey = parseInt(porcentage(partialvalue,totalvalue))
-        
-        console.log(porcentagesurvey)    
+        let newOptionsVotes = optionsVotes.map(function(obj){
+            obj.porcentage = Math.round((obj.vote/totalvotes)*100)
+            return obj
+        })
+        console.log(newOptionsVotes)
 
         await Survey.updateOne(
-            {'_id': ObjectId(req.params.id), "options.option": optionSelected},
-            {$set: {"options.$.porcentage": porcentagesurvey}}
-        )
-        
+            {'_id': ObjectId(req.params.id)},            
+            {$set: {"options": newOptionsVotes}}
+        )    
 
         res.redirect(`/results/${id}`)
 
