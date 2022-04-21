@@ -2,9 +2,7 @@ const Survey = require('../models/modelSurvey')
 const User = require('../models/modelUser')
 const app = require('../index')
 const { ObjectId } = require('bson')
-const { options } = require('../routes/survey.routes')
-//const ObjectID = require('mongodb').ObjectID;
-
+// const { options } = require('../routes/survey.routes')
 
 const showCreateForm = async (req, res) => {
     try {       
@@ -148,8 +146,7 @@ const updateVote=  async(req, res)=>{
         let newOptionsVotes = optionsVotes.map(function(obj){
             obj.porcentage = Math.round((obj.vote/totalvotes)*100)
             return obj
-        })
-        console.log(newOptionsVotes)
+        })    
 
         await Survey.updateOne(
             {'_id': ObjectId(req.params.id)},            

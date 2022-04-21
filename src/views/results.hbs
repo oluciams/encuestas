@@ -2,10 +2,9 @@
   <div class="offset-md-4">  
     <div class="mt-3">
       <a href="/" class="text-dark mt-2 text-decoration-none fs-5"><i class="bi bi-arrow-left-square mx-2"></i>Back</a>
-      <div class="col-6 d-flex justify-content-end">
-        <!-- Button trigger modal -->         
-          <a data-bs-toggle="modal" data-bs-target="#exampleModal" class="text-secondary text-end mt-1 mx-2"><i class="bi bi-twitter"></i></a>          
-          <!-- Modal -->
+      <div class="col-6 d-flex justify-content-end"> 
+
+        <a data-bs-toggle="modal" data-bs-target="#exampleModal" class="text-secondary text-end mt-1 mx-2"><i class="bi bi-share-fill"></i></a>           
           <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
               <div class="modal-content">
@@ -13,16 +12,15 @@
                   <h6 class="modal-title" id="exampleModalLabel">Copy the URL to share this survey</h6>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
-                  http://localhost:3000/surveys/62609ca52476c30698ca3081
+                <div class="modal-body">                 
+                  http://localhost:3000/surveys/{{survey._id}}
                 </div>                
               </div>
             </div>
-          </div>         
-
-        {{!-- <a href="" class="text-secondary text-end mt-1 mx-2"><i class="bi bi-twitter"></i></a> --}}
-        <a href="" class="text-secondary text-end mt-1 mx-2"><i class="bi bi-facebook"></i></a>
-        <a href="" class="text-secondary text-end mt-1 mx-2"><i class="bi bi-share-fill"></i></a>
+          </div>
+        <a href="" class="text-secondary text-end mt-1 mx-2"><i class="bi bi-twitter"></i></a>
+        <a href="" class="text-secondary text-end mt-1 mx-2"><i class="bi bi-facebook"></i></a> 
+               
       </div>           
     </div>      
       <div class="col-6 mt-4 mb-4 border border-2">

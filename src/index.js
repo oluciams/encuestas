@@ -39,7 +39,6 @@ app.use((req, res, next) =>{
 })
 
 //para peticiones delete y put
-//app.use(bodyParser.urlencoded({extended:false}))
 app.use(methodOverride('_method', {methods: ['POST', 'GET']}))
 
 
@@ -50,15 +49,13 @@ app.use(async (req, res, next) => {
    if(userId){
        const user = await User.findById(userId)
        if(user){
-           res.locals.user = user  
-         //   console.log(res.locals.user)          
+           res.locals.user = user       
        }else{
            delete req.session.userId
        }
    }
    next()    
 })
-
 
 //Handlebars
 app.set('views', path.join(__dirname, 'views'))

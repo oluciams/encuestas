@@ -1,5 +1,5 @@
 const User = require('../models/modelUser')
-const app = require ('../index')
+//const app = require ('../index')
 
 //1
 const createUserForm = (req,res)=>{      
@@ -30,8 +30,7 @@ const loginUser = async(req,res)=>{
         const user = await User.authenticate(req.body.email, req.body.password)
         if(user){
             req.session.userId = user._id
-            req.flash('success_msg', 'User logged in successfully')  
-            //return res.redirect('/surveys')
+            req.flash('success_msg', 'User logged in successfully')   
             return res.redirect('/')
         }else{
             req.flash('danger_msg', 'wrong email or password. Try again!')
