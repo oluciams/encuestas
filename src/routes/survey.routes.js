@@ -5,7 +5,7 @@ const {requireUser} = require ('../middleware/auth.middleware')
 const app = require('../index')
 
 
-//router.get('/', showSurveys)
+router.get('/', showSurveys)
 
 router.get('/createSurvey', showCreateForm)
 
